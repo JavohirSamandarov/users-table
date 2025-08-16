@@ -1,0 +1,176 @@
+<div class="w-full wrapper">
+  <div class="container">
+    <div class="users-wrapper">
+      <div class="top-left"></div>
+      <div class="top-right"></div>
+      <div class="bottom-left"></div>
+      <div class="bottom-right"></div>
+
+      <div class="w-full flex items-start justify-start p-4 border-b border-b-[#f3f3f3] dark:border-b-[#1f2937] bg-transparent">
+        <h1 class="text-[1.15rem] text-[#00ae90]">Foydalanuvchilar <span class="text-[14px] text-[#888ea8] tracking-[2px] ms-1">({{ totalRecords }})</span></h1>
+      </div>
+
+      <div class="w-full p-4 flex items-center justify-between gap-3 lg:gap-6">
+        
+        <div class="w-full grid grid-cols-4 gap-6">
+
+          <div class="col-span-1 relative flex flex-col">
+            <label for="searchuser" class="text-[15px] text-black dark:text-white">Nik</label>
+            <input id="searchuser" type="text" pInputText pSize="small" class="input-bg pl-8" (input)="onFilter($event)" />
+          </div><!---.col-span--->
+
+          <div class="col-span-1 relative flex flex-col">
+            <label for="searchname" class="text-[15px] text-black dark:text-white">Nomi</label>
+            <input class="input-bg pl-8" id="searchname" type="text" pInputText pSize="small" (input)="onFilter($event)" />
+          </div><!---.col-span--->
+
+          
+          <div class="col-span-1 flex flex-col">
+            <label for="countrySelect" class="text-[15px] text-black dark:text-white">Davlat</label>
+            <p-autoComplete
+              id="countrySelect"
+              [(ngModel)]="selectedCountry"
+              [suggestions]="filteredCountries"
+              (completeMethod)="filterCountry($event)"
+              (onSelect)="onCountrySelect()"
+              (ngModelChange)="!$event ? onCountryClear() : null"
+              optionLabel="name"
+              placeholder="-">
+            </p-autoComplete>
+          </div><!---.col-span--->
+
+          <div class="col-span-1 grid grid-cols-2 gap-2">
+            <div class="flex flex-col">
+              <label for="ageFrom" class="text-[15px] text-black dark:text-white">Yosh</label>
+              <input
+                id="ageFrom"
+                type="number"
+                pInputText
+                class="input-bg"
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label for="ageTo" class="text-[15px] text-black">&nbsp;</label>
+              <input
+                id="ageTo"
+                type="number"
+                pInputText
+                class="input-bg"
+              />
+            </div>
+          </div><!---.col-span--->
+
+        </div>
+
+      </div>
+
+      <div class="w-full overflow-x-auto md:overflow-visible">
+        <p-table
+          #etable
+          [value]="users"
+          [lazy]="true"
+          [paginator]="true"
+          [rows]="rows"
+          [rowsPerPageOptions]="[10, 20, 50]"
+          [totalRecords]="totalRecords"
+          [globalFilterFields]="['username']"
+          (onLazyLoad)="loadUsersLazy($event)"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+          [tableStyle]="{ 'min-width': '768px', 'width':'100%' }">          
+          <ng-template pTemplate="header">
+            <tr class="uppercase">
+              <th pSortableColumn="username" style="min-width:200px"><i class="fa-regular fa-user"></i> &nbsp; Foydalanuvchi <p-sortIcon field="username"></p-sortIcon></th>
+              <th style="min-width:140px"><i class="fa-regular fa-chart-bar"></i> &nbsp; Ko'nikmalar</th>
+              <th style="min-width:140px"><i class="fa-regular fa-chart-bar"></i> &nbsp; Faollik</th>
+              <th style="min-width:160px"><i class="fa-regular fa-flag"></i> &nbsp; Kontestlar</th>
+              <th style="min-width:150px"><i class="fa-solid fa-bolt"></i> &nbsp; Bellashuvlar</th>
+              <th style="min-width:120px"><i class="fa-regular fa-calendar-days"></i> &nbsp; Streak</th>
+              <th style="min-width:120px"><i class="fa-solid fa-dollar-sign"></i> &nbsp; Kepcoin</th>
+              <th style="min-width:160px"><i class="fa-regular fa-clock"></i> &nbsp; Oxirigi kirish</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-user>
+            <tr>
+              <td>
+                <a href="#" class="w-full flex items-start justify-start gap-2">
+                  <div class="w-[42px] h-[42px] rounded-full overflow-hidden me-2">
+                    <img [src]="user.avatar" alt="Avatar" loading="lazy" class="w-full h-full object-cover" />
+                  </div>
+                  <div class="">
+                    <div class="w-full">
+                      <span class="text-[16px]">{{ user.username }}</span>
+                      <span class="fi ml-2" [ngClass]="'fi-' + (user.country ? user.country : '')"></span>
+                    </div>
+                    <div>
+                      <span class="text-[11.2px]">{{ user.firstName }} {{ user.lastName }}</span >
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td class="!text-center">
+                <span class="border border-[#00ae90] text-[#00ae90] max-w-max rounded-md px-[.9em] py-[.65em] text-[.81em]"> {{ user.skillsRating.value }} </span>
+              </td>
+              <td class="!text-center">
+                <span class="border border-[#48f7ee] text-[#48f7ee] max-w-max rounded-md px-[.9em] py-[.65em] text-[.81em]"> {{ user.activityRating.value }} </span>
+              </td>
+              <td>
+                <div class="flex items-center justify-center">
+                  <img class="w-[32px] h-[32px]" [src]=" 'assets/images/ratings/' + user.contestsRating?.title.toLowerCase() + '.webp' " [alt]="user.contestsRating?.title"  loading="lazy" />
+                  <span class="ms-1 text-[13px]">{{ user.contestsRating?.value }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="flex items-center justify-center text-[.813rem]">
+                  <span class="px-[8px] py-[4px] rounded-[50rem] !text-[.81em] leading-[1.2] me-2"
+                      [ngStyle]="{ 
+                        'background-color': user?.challengesRating?.title === 'R1' ? '#438FFF' : 
+                                            user?.challengesRating?.title === 'R2' ? '#48f7ee' : 
+                                            user?.challengesRating?.title === 'R3' ? '#48f768' : 
+                                            user?.challengesRating?.title === 'CM' ? '#6663ff' :
+                                            (user?.challengesRating?.title === 'M' || user?.challengesRating?.title === 'IM') ? '#FFF621' : '',
+                        color: (user?.challengesRating?.title === 'R1' || 
+                                user?.challengesRating?.title === 'CM') ? '#fff' : 
+                                (user?.challengesRating?.title === 'M' || user?.challengesRating?.title === 'IM') ? '#000' : '#000'
+                      }">
+                  {{ user?.challengesRating?.title }}
+                </span>
+                  <span>{{ user.challengesRating.value }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="flex items-center justify-center text-[.813rem]">
+                  <img *ngIf="user.streak !== null && user.streak !== undefined"
+                      [src]="'assets/images/icons/' + (user.maxStreak > 0 ? 'fire-2.webp' : 'fire-1.webp')"
+                      [alt]="user.maxStreak > 0 ? 'Active streak' : 'No streak'"
+                      class="me-1 h-[20px]" />
+                  {{ user.streak }}
+                </div>
+
+                <div class="flex items-center justify-center text-[.813rem]">
+                  <img *ngIf="user.maxStreak !== null && user.maxStreak !== undefined"
+                      [src]="'assets/images/icons/' + (user.maxStreak === 0 ? 'fire-1.webp' : (user.maxStreak >= 1 && user.maxStreak <= 10) ? 'fire-3.webp' : 'fire-4.webp')"
+                      [alt]="user.maxStreak === 0 ? 'No streak' : (user.maxStreak >= 1 && user.maxStreak <= 10) ? 'Low streak' : 'High streak'"
+                      class="me-1 h-[20px]" loading="lazy" />
+                  {{ user.maxStreak }}
+                </div>
+              </td>
+              <td>
+                <div class="w-full flex items-center justify-center">
+                  <img src="assets/images/icons/kepcoin.png" alt="kepcoin" class="me-1 h-[19px]" loading="lazy" />
+                  <span class="text-[.813rem]">{{ user.kepcoin }}</span>
+                </div>
+              </td>
+              <td class="!text-center">{{ user.lastSeen }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+
+      </div><!---.p-table end-->
+    </div>
+  </div>
+</div>
+

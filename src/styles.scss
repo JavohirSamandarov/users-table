@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+body{
+  font-family: "Titillium Web", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.container {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+p-table {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+}
+
+p-table thead tr th,
+p-table tfoot tr td {
+  @apply text-gray-600 !py-[18.4px] !px-[20px] cursor-pointer !text-[12px] font-semibold text-center dark:text-gray-400 !bg-[#f9fafb] dark:!bg-[#1f2937];
+  // background-color: #f9fafb !important;
+}
+
+p-table tbody tr td {
+  padding: 18.4px 20px !important;
+  white-space: normal !important;
+  @apply text-[80%] dark:text-gray-400;
+}
+
+.users-wrapper {
+  @apply w-full border border-[#f3f3f3] dark:border-[#1f2937] my-[60px] relative before:absolute before:top-0 before:left-1/2 before:right-1/2 before:w-[50px] before:h-[3px] before:bg-[#00ae90b3] before:rounded-tl-[0] before:rounded-tr-[0] before:rounded-br-[30px] before:rounded-bl-[30px] after:absolute after:bottom-0 after:left-1/2 after:right-1/2 after:w-[50px] after:h-[3px] after:bg-[#00ae90b3] after:rounded-tl-[30px] after:rounded-tr-[30px] after:rounded-br-[0] after:rounded-bl-[0];
+}
+
+.top-left{
+  @apply absolute top-0 left-0 before:absolute before:top-0 before:left-0 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-[rgb(0,174,144)] before:to-transparent after:absolute after:top-0 after:left-0 after:w-[1px] after:h-[30px] after:bg-gradient-to-b after:from-[rgb(0,174,144)] after:to-transparent;
+}
+
+.top-right{
+  @apply absolute top-0 right-0 before:absolute before:top-0 before:right-0 before:w-[30px] before:h-[1px] before:bg-gradient-to-l before:from-[rgb(0,174,144)] before:to-transparent after:absolute after:top-0 after:right-0 after:w-[1px] after:h-[30px] after:bg-gradient-to-b after:from-[rgb(0,174,144)] after:to-transparent;
+}
+
+.bottom-left{
+  @apply absolute bottom-0 left-0 before:absolute before:bottom-0 before:left-0 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-[rgb(0,174,144)] before:to-transparent after:absolute after:bottom-0 after:left-0 after:w-[1px] after:h-[30px] after:bg-gradient-to-t after:from-[rgb(0,174,144)] after:to-transparent z-[999];
+}
+
+.bottom-right{
+  @apply absolute bottom-0 right-0 before:absolute before:bottom-0 before:right-0 before:w-[30px] before:h-[1px] before:bg-gradient-to-l before:from-[rgb(0,174,144)] before:to-transparent after:absolute after:bottom-0 after:right-0 after:w-[1px] after:h-[30px] after:bg-gradient-to-t after:from-[rgb(0,174,144)] after:to-transparent z-[999];
+}
+
+.input-bg{
+  @apply w-full text-[15px] !border !border-[#ffffff1a] !shadow-[1px_0_.125rem_#0000000d] !rounded-none !bg-[#00ae900d] focus:!bg-[#00ae901a];
+}

@@ -1,0 +1,28 @@
+// :host ::ng-deep .p-paginator {
+//   border: 1px solid #ccc;
+//   border-radius: 0; /* Kvadrat */
+//   display: inline-flex;
+// }
+
+// :host ::ng-deep .p-paginator .p-paginator-page,
+// :host ::ng-deep .p-paginator .p-paginator-next,
+// :host ::ng-deep .p-paginator .p-paginator-prev {
+//   border-radius: 0 !important; /* Kvadrat */
+//   border: 1px solid #ccc;
+//   margin: 0;
+// }
+
+// :host ::ng-deep .p-paginator .p-paginator-page:not(.p-highlight):hover {
+//   background: #f0f0f0;
+// }
+::ng-deep {
+    .p-autocomplete-input {
+        @apply w-full text-[15px] !border !border-[#ffffff1a] !shadow-[1px_0_.125rem_#0000000d] !rounded-none !bg-[#00ae900d] focus:!bg-[#00ae901a] py-[5.1px] px-[10px];
+    }
+    .p-autocomplete-option{
+        @apply px-[10px] py-[4px] text-[15px]
+    }
+    .p-inputtext{
+        @apply px-[10px] py-[6px] text-[12px]
+    }
+}
